@@ -1,0 +1,5 @@
+- make "amount" private
+- money rounding?
+- getHash()
+- equal null
+- equal object

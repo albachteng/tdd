@@ -1,15 +1,31 @@
-export class Money { }
-
-export class Dollar {
+export class Money {
+  protected _amount: number;
   constructor(amount: number) {
-    this.amount = amount;
+    this._amount = amount;
   }
 
-  public times(multiplier: number): Dollar {
-    return new Dollar(this.amount * multiplier);
+  protected times(multiplier: number): Dollar {
+    return new Dollar(this._amount * multiplier);
+  }
+}
+
+export class Dollar extends Money {
+  constructor(amount: number) {
+    super(amount);
   }
 
   public equals(toCompare: Dollar): boolean {
-    return this.amount === toCompare.amount;
+    return this._amount === toCompare._amount;
+  }
+}
+
+export class Franc extends Money {
+  constructor(amount: number) {
+    super(amount);
+  }
+
+  public equals(toCompare: Franc): boolean {
+    console.log(this._amount)
+    return this._amount === toCompare._amount;
   }
 }
