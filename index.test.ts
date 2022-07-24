@@ -1,37 +1,43 @@
-import { Dollar, Franc } from './index.ts';
+import { Money, Dollar, Franc } from './index.ts';
 
 describe("test Dollar", () => {
 
-  it("multiplies dollar amounts correctly", () => {
-    const five = new Dollar(5);
+  it("times method multiplies dollar amounts correctly", () => {
+    const five = Money.dollar(5);
     const ten = five.times(2);
-    expect(ten).toEqual(new Dollar(10));
+    expect(ten).toEqual(Money.dollar(10));
     const fifteen = five.times(3);
-    expect(fifteen).toEqual(new Dollar(15));
+    expect(fifteen).toEqual(Money.dollar(15));
   })
 
-  it("correctly evaluates equality", () =>{
-    expect(new Dollar(5)).toEqual(new Dollar(5));
-    expect(new Dollar(5).equals(new Dollar(5))).toBe(true);
-    expect(new Dollar(5).equals(new Dollar(6))).toBe(false);
+  it("equals method correctly evaluates equality", () =>{
+    expect(Money.dollar(5)).toEqual(Money.dollar(5));
+    expect(Money.dollar(5).equals(Money.dollar(5))).toBe(true);
+    expect(Money.dollar(5).equals(Money.dollar(6))).toBe(false);
   })
 })
 
 describe("test Franc", () => {
 
-  it("multiplies franc amounts correctly", () => {
-    const five = new Franc(5);
+  it("times method multiplies franc amounts correctly", () => {
+    const five = Money.franc(5);
     const ten = five.times(2);
-    expect(ten).toEqual(new Franc(10));
+    expect(ten).toEqual(Money.franc(10));
     const fifteen = five.times(3);
-    expect(fifteen).toEqual(new Franc(15));
+    expect(fifteen).toEqual(Money.franc(15));
   })
 
-  it("correctly evaluates equality", () =>{
-    expect(new Franc(5)).toEqual(new Franc(5));
-    expect(new Franc(5).equals(new Franc(5))).toBe(true);
-    expect(new Franc(5).equals(new Franc(6))).toBe(false);
+  it("equals correctly evaluates equality", () =>{
+    expect(Money.franc(5)).toEqual(Money.franc(5));
+    expect(Money.franc(5).equals(Money.franc(5))).toBe(true);
+    expect(Money.franc(5).equals(Money.franc(6))).toBe(false);
   })
 
+})
+
+describe("comparing dollars and francs", () => {
+  it("does recognizes different currencies", () => {
+    expect(Money.franc(5).equals(Money.dollar(5))).toBe(false);
+  })
 })
 
