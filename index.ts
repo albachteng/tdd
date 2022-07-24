@@ -1,13 +1,28 @@
 export class Bank {
-  constructor() {}
+  private _rates: Map<Pair, number>;
+  constructor() {
+    this._rates = new Map<Pair, number>;
+  }
+
+  addRate(from: string, to: string, rate: number) {
+    return this._rates.set(new Pair(from, to), rate);
+  }
+
+  rate(from: string, to: string): number {
+    return this._rates.get(new Pair(from, to));
+  }
+
+  rate(from: string, to: string) {
+    return from === "CHF" && to === "USD" ? 2 : 1;
+  }
 
   reduce(source: Expression, to: string): Money {
-    return source.reduce(to);
+    return source.reduce(this, to);
   }
 }
 
 export interface Expression {
-  reduce: (to: string) => Money
+  reduce: (bank: Bank, to: string) => Money
 };
 
 export abstract class Money implements Expression {
@@ -36,8 +51,9 @@ export abstract class Money implements Expression {
     return new Sum(this, addend);
   }
 
-  protected reduce(to: string): Money {
-    return this;
+  protected reduce(bank: Bank, to: string): Money {
+    const rate = bank.rate(this.currency(), to);
+    return new Money(this._amount / rate, to);
   }
 
   static dollar(amount: number): Money {
@@ -52,12 +68,31 @@ export abstract class Money implements Expression {
 export class Sum implements Expression {
   public augend: Money
   public addend: Money
+
   constructor(augend: Money, addend: Money) {
     this.augend = augend;
     this.addend = addend;
   }
-  public reduce(to: string): Money {
+
+  public reduce(bank: Bank, to: string): Money {
     const amount = this.augend._amount + this.addend._amount;
     return new Money(amount, to);
+  }
+}
+
+class Pair {
+  private _from: string;
+  private _to: string;
+  constructor(from: string, to: string) {
+    this._from = from;
+    this._to = to;
+  }
+
+  public equals(compare: Pair): boolean {
+    return this._from === compare._from && this._to === compare._to;
+  }
+
+  public hashCode(): number {
+    return 0;
   }
 }
