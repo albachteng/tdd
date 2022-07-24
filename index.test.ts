@@ -1,8 +1,8 @@
-import { Money, Dollar, Franc } from './index.ts';
+import { Money } from './index.ts';
 
-describe("test Dollar", () => {
+describe("test times", () => {
 
-  it("times method multiplies dollar amounts correctly", () => {
+  it("multiplies currency amounts correctly", () => {
     const five = Money.dollar(5);
     const ten = five.times(2);
     expect(ten).toEqual(Money.dollar(10));
@@ -10,34 +10,26 @@ describe("test Dollar", () => {
     expect(fifteen).toEqual(Money.dollar(15));
   })
 
-  it("equals method correctly evaluates equality", () =>{
+})
+
+describe("test equals", () => {
+  it("correctly evaluates equality for the same currency", () =>{
     expect(Money.dollar(5)).toEqual(Money.dollar(5));
     expect(Money.dollar(5).equals(Money.dollar(5))).toBe(true);
     expect(Money.dollar(5).equals(Money.dollar(6))).toBe(false);
   })
 })
 
-describe("test Franc", () => {
-
-  it("times method multiplies franc amounts correctly", () => {
-    const five = Money.franc(5);
-    const ten = five.times(2);
-    expect(ten).toEqual(Money.franc(10));
-    const fifteen = five.times(3);
-    expect(fifteen).toEqual(Money.franc(15));
-  })
-
-  it("equals correctly evaluates equality", () =>{
-    expect(Money.franc(5)).toEqual(Money.franc(5));
-    expect(Money.franc(5).equals(Money.franc(5))).toBe(true);
-    expect(Money.franc(5).equals(Money.franc(6))).toBe(false);
-  })
-
-})
-
 describe("comparing dollars and francs", () => {
-  it("does recognizes different currencies", () => {
+  it("recognizes different currencies are not equivalent", () => {
     expect(Money.franc(5).equals(Money.dollar(5))).toBe(false);
   })
+})
+
+describe("test currency", () => {
+  it("has the correct currency string for each type", () => {
+    expect(Money.dollar(1).currency()).toEqual("USD");
+    expect(Money.franc(1).currency()).toEqual("CHF");
+  });
 })
 

@@ -1,36 +1,31 @@
 export abstract class Money {
   protected _amount: number;
-  constructor(amount: number) {
+  protected _currency: string;
+
+  constructor(amount: number, currency: string) {
     this._amount = amount;
+    this._currency = currency;
   }
 
-  protected times(multiplier: number): Money {
-    return new Dollar(this._amount * multiplier);
+  protected currency() {
+    return this._currency;
   }
 
   protected equals(toCompare: Money): boolean {
     return (this._amount === toCompare._amount
-      // closest analogue to "getClass() in Java"
-      && this.constructor.name === toCompare.constructor.name)
+      && this.currency() === toCompare.currency())
   }
 
-  static dollar(amount: number) {
-    return new Dollar(amount);
+  protected times(multiplier: number): Money {
+    return new Money(this._amount * multiplier, this._currency);
   }
 
-  static franc(amount: number) {
-    return new Franc(amount);
+  static dollar(amount: number, currency: string) {
+    return new Money(amount, "USD");
+  }
+
+  static franc(amount: number, currency: string) {
+    return new Money(amount, "CHF");
   }
 }
 
-export class Dollar extends Money {
-  constructor(amount: number) {
-    super(amount);
-  }
-}
-
-export class Franc extends Money {
-  constructor(amount: number) {
-    super(amount);
-  }
-}

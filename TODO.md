@@ -4,7 +4,8 @@
 - getHash()
 - equal null
 - equal object
-- dollar/franc duplication
+[x] dollar/franc duplication
 [x] common equals 
-- common times
-- currency?
+[x] common times
+[x] currency?
+[x] delete redundant franc multiplication test?
