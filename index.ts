@@ -20,6 +20,10 @@ export abstract class Money {
     return new Money(this._amount * multiplier, this._currency);
   }
 
+  protected plus(addend: number) {
+    return new Money(this._amount + addend._amount, this._currency);
+  }
+
   static dollar(amount: number, currency: string) {
     return new Money(amount, "USD");
   }

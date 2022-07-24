@@ -9,3 +9,4 @@
 [x] common times
 [x] currency?
 [x] delete redundant franc multiplication test?
+- $5 + $5 = $10
