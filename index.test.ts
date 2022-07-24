@@ -1,4 +1,4 @@
-import { Money } from './index.ts';
+import { Money, Sum, Bank, Expression} from './index.ts';
 
 describe("times method", () => {
 
@@ -33,8 +33,35 @@ describe("currency method", () => {
   });
 })
 
-describe("addition method", () => {
-  it("correctly adds like currency together", () => {
-    expect(Money.dollar(5).plus(Money.dollar(5))).toEqual(Money.dollar(10));
+describe("plus method", () => {
+  // it("correctly adds like currency together", () => {
+  //   expect(Money.dollar(5).plus(Money.dollar(5))).toEqual(Money.dollar(10));
+  // })
+  it("returns a sum", () => {
+    const five = Money.dollar(5);
+    const result = five.plus(five);
+    expect(result.augend).toEqual(five);
+    expect(result.addend).toEqual(five);
+  })
+})
+
+describe("bank reduce method", () => {
+  it("returns a reduced value in the correct currency", () => {
+    const bank = new Bank();
+    const five = Money.dollar(5);
+    const sum = five.plus(five);
+    const reduced = bank.reduce(sum, "USD");
+    expect(reduced).toEqual(Money.dollar(10));
+  })
+  it("reduce sum", () => {
+    const sum = new Sum(Money.dollar(3), Money.dollar(4));
+    const bank = new Bank();
+    const result = bank.reduce(sum, "USD");
+    expect(result).toEqual(Money.dollar(7));
+  })
+  it("reduce with money", () => {
+    const bank = new Bank();
+    const result = bank.reduce(Money.dollar(1), "USD");
+    expect(result).toEqual(Money.dollar(1));
   })
 })
