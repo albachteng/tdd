@@ -21,6 +21,7 @@ export class Bank {
 
 export interface Expression {
   reduce: (bank: Bank, to: string) => Money
+  plus: (bank: Bank, to: string) => Expression
 };
 
 export abstract class Money implements Expression {
@@ -41,11 +42,11 @@ export abstract class Money implements Expression {
       && this.currency() === toCompare.currency())
   }
 
-  protected times(multiplier: number): Money {
+  protected times(multiplier: number): Expression {
     return new Money(this._amount * multiplier, this.currency());
   }
 
-  protected plus(addend: Money): Expression {
+  public plus(addend: Expression): Expression {
     return new Sum(this, addend);
   }
 
@@ -64,17 +65,21 @@ export abstract class Money implements Expression {
 }
 
 export class Sum implements Expression {
-  public augend: Money
-  public addend: Money
+  public augend: Expression
+  public addend: Expression
 
-  constructor(augend: Money, addend: Money) {
+  constructor(augend: Expression, addend: Expression) {
     this.augend = augend;
     this.addend = addend;
   }
 
   public reduce(bank: Bank, to: string): Money {
-    const amount = this.augend._amount + this.addend._amount;
+    const amount = this.augend.reduce(bank, to)._amount + this.addend.reduce(bank, to)._amount;
     return new Money(amount, to);
+  }
+
+  public plus(bank: Bank, to: string): Expression {
+    return null;
   }
 }
 

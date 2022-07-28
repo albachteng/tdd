@@ -76,10 +76,10 @@ describe("bank reduce method", () => {
   })
 })
 
-describe("mixed rates", () => {
+describe("mixed addition", () => {
   it("can add different currencies when given an exchange rate", () => {
-    const fiveDollars = Money.dollar(5);
-    const tenFrancs = Money.franc(10);
+    const fiveDollars: Expression = Money.dollar(5);
+    const tenFrancs: Expression = Money.franc(10);
     const bank = new Bank();
     bank.addRate("CHF", "USD", 2);
     const result = bank.reduce(fiveDollars.plus(tenFrancs), "USD");
