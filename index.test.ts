@@ -67,7 +67,12 @@ describe("bank reduce method", () => {
   it("can convert francs from dollars", () => {
     const bank = new Bank();
     bank.addRate("CHF", "USD", 2);
+    console.log(bank)
     const result = bank.reduce(Money.franc(2), "USD");
+    // console.log(result);
     expect(result).toEqual(Money.dollar(1));
+  });
+  it("sets rate to 1 as the identity rate", () => {
+    expect(new Bank().rate("USD", "USD")).toEqual(1)
   })
 })

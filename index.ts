@@ -5,15 +5,12 @@ export class Bank {
   }
 
   addRate(from: string, to: string, rate: number) {
-    return this._rates.set(new Pair(from, to), rate);
+    this._rates.set(new Pair(from, to), rate);
   }
 
   rate(from: string, to: string): number {
+    if (from === to) return 1;
     return this._rates.get(new Pair(from, to));
-  }
-
-  rate(from: string, to: string) {
-    return from === "CHF" && to === "USD" ? 2 : 1;
   }
 
   reduce(source: Expression, to: string): Money {
@@ -34,7 +31,7 @@ export abstract class Money implements Expression {
     this._currency = currency;
   }
 
-  protected currency() {
+  protected currency(): string {
     return this._currency;
   }
 
