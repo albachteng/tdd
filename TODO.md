@@ -1,9 +1,9 @@
 [x] make "amount" private
 - money rounding?
 [x] equals
-- getHash()
-- equal null
-- equal object
+[x] getHash()
+[x] equal null
+[x] equal object
 [x] dollar/franc duplication
 [x] common equals 
 [x] common times
@@ -15,5 +15,5 @@
 - return money from plus
 [x] reduce money with conversion
 [x] reduce(Bank, string)
-- Sum.plus()
-- Expression.times();
+[x] Sum.plus()
+[x] Expression.times();
