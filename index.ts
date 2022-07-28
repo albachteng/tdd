@@ -1,16 +1,17 @@
 export class Bank {
-  private _rates: Map<Pair, number>;
+  private _rates: Map<string, number>;
   constructor() {
-    this._rates = new Map<Pair, number>;
+    this._rates = new Map<string, number>;
   }
 
   addRate(from: string, to: string, rate: number) {
-    this._rates.set(new Pair(from, to), rate);
+    this._rates.set(from + to, rate);
+    this._rates.set(to + from, 1/rate);
   }
 
   rate(from: string, to: string): number {
     if (from === to) return 1;
-    return this._rates.get(new Pair(from, to));
+    return this._rates.get(from + to);
   }
 
   reduce(source: Expression, to: string): Money {
@@ -77,19 +78,19 @@ export class Sum implements Expression {
   }
 }
 
-class Pair {
-  private _from: string;
-  private _to: string;
-  constructor(from: string, to: string) {
-    this._from = from;
-    this._to = to;
-  }
-
-  public equals(compare: Pair): boolean {
-    return this._from === compare._from && this._to === compare._to;
-  }
-
-  public hashCode(): number {
-    return 0;
-  }
-}
+// class Pair {
+//   private _from: string;
+//   private _to: string;
+//   constructor(from: string, to: string) {
+//     this._from = from;
+//     this._to = to;
+//   }
+//
+//   public equals(compare: Pair): boolean {
+//     return this._from === compare._from && this._to === compare._to;
+//   }
+//
+//   public hashCode(): number {
+//     return 0;
+//   }
+// }
